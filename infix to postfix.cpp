@@ -1,6 +1,10 @@
 #include<iostream>
 #include<cstring>
 using namespace std;
+
+
+//stack implemented using array
+
 class stack{
     private:
       int size;
@@ -15,14 +19,20 @@ class stack{
       int pre(char c);
       int isOpened(char c);
 };
+//parameterized constructer
+
 stack::stack(int size){
     this->size=size;
     this->top =-1;
     this->s=new char[this->size];
 }
+
+// destructor
 stack::~stack(){
     delete [] this->s;
 }
+
+// various function of stack class
 
 void stack::push(char c){
     if(this->top==this->size-1)
@@ -47,17 +57,18 @@ char stack::pop(){
     }
     return temp;
 }
+// converts of infix to postfix
 void stack::infixtopost(string exp){
     int size=exp.length();
-    char* postfix=new char[size+1];
+    char* postfix=new char[size+1];    // new char array is created to store the result
     int i=0,j=0;
     size++;
     while(exp[i]!=NULL){
-        if(isOpened(exp[i])){
+        if(isOpened(exp[i])){           // if operand directly add to postfix array
             postfix[j++]=exp[i++];
         }
         else{
-            if(pre(exp[i])>pre(s[top]) && top>=0)
+            if(pre(exp[i])>pre(s[top]) && top>=0)          // check precedence 
                push(exp[i++]);
              else
                 postfix[j++]=pop();
@@ -71,12 +82,16 @@ void stack::infixtopost(string exp){
       cout<<postfix[i];
     
 }
+
+// checks if passed char is (alphabet)operand or operator
 int stack::isOpened(char exp){
     if(exp=='+' || exp=='-' || exp=='*' || exp=='/')
       return 0;
     else
       return 1;  
 }
+
+//checks the precedence of the passed operator
 
 int stack::pre(char exp){
     if(exp=='+' || exp=='-')
@@ -90,8 +105,8 @@ int stack::pre(char exp){
 int main(){
     string exp="a+b*c+d";
     int size=exp.length();
-    stack stk(size);
-    stk.~stack();
+    stack stk(size);// line can be negleted
+    stk.~stack();  // line can be negleted
     stack stack(size);
     stk.push('#');
     stk.infixtopost(exp);
